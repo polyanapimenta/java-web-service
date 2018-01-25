@@ -19,11 +19,11 @@ public class EstoqueWS {
 	
 	//método publico que devolve uma lista de itens
 	@WebMethod(operationName="todosOsItens") //serve para renomear a request/o name do método
-	@WebResult(name="itens")
+	@WebResult(name="item")
 	public ListaItens getItens(){
 		
 		System.out.println("Chamando o getItens()"); //só para saber que o método foi chamado
 		List<Item> lista = dao.todosItens();
-		return new ListaItens(lista);
+		return lista;
 	}
 }

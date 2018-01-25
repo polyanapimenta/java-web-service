@@ -1,5 +1,9 @@
 ﻿JAX-WS: DOMINE A CRIAÇÃO DE WEBSERVICES SOAP
 
+///////////////////////////////
+01. O primeiro serviço SOAP
+//////////////////////////////
+
 Aplicações não vivem sozinhas, elas precisam acessar informações de outras Aplicações e outras aplicações acessarem as informações desta.
 
 aplicações fornecem serviços
@@ -238,10 +242,83 @@ RPC segue o modelo cliente-server (síncrono) que já testamos nesse capítulo. 
 
 ----------------------------------------------------------------------//
 
-////////////////////////////
-Personalizando o Serviço:
-///////////////////////////
+///////////////////////////////
+02. Personalizando o Serviço:
+//////////////////////////////
 
 -Algumas notações:
 
 ?WSDL -> um xml que contém informações para o client poder chamar o serviço.
+
+Não há uma nomenclatura padão no mundo SOAP, porém no mundo Java existe, como por exemplo nosso getItens e nossa Lista de Itens
+
+A nomenclatura getItens não faz muito sentido para as pessoas que não pertencem ao mundo Java, para ficar mais amigável a nomenclatura sobre o que nosso serviço faz, iremos renomear o nome da requisição "getItens" -> para todosOsItens, essa alteração será feita dentro do nosso projeto Java, através das especificações do JAX-WS e JAX-B (Binding)
+
+Sabemos que dentro de nosso contrato existe informações sobre nosso serviço, será através dele que iremos consultar (onde/qual tag XML) será/terá seu name modificado.
+
+Exemplo Real:
+
+    <operation name="getItens">
+
+Especificações:
+@WebMethod -> serve para renomear o nosso operationName, nossa request
+
+Exemplo para alteração do name da tag acima:
+
+    @WebMethod(operationName="todosOsItens")
+
+Nós pausamos a execução do servidor no Eclipse, salvamos, e rodamos novamente o servidor, agora temos que informar ao SoapUI sobre a atualização, para isso clique com o botão direito do mouse sobre EstoqueWSPortBinding (dentro do SoapUI) e clique em Update Definition, lembre-se de deixar marcado o checkbox de "Recriate existing request with the new schema" e "Create defoult requests for new methods" e ou outros que for relevante à atualizar
+ele irá atualizar o projeto SOAP de acordo com as definições de WSDL, clique em OK para isso.(http://localhost:8080/estoquews?wsdl)  note que de getItens ficou todosOsItens, e o conteúdo do Body do XML tmb se alterou 
+
+@WebResult -> serve para alterar o nome da tag de retorno (return) de dentro do XML response, alteramos o nome da tag <return> ... </return> para <item> ... </item>
+
+Exemplo:
+
+@WebResult(name="item")
+public List<Item> getItens(){
+    ...
+}
+
+Porém queremos que estes itens estejam pertencendo a uma estrutura maior, ou seja que esteja dentro da tag pai <itens> <item> ... </item> </itens>
+
+Para fazer isso, iremos customizar a renderização de nossa lista, devemos devolver uma classe auxiliar no Java (ListaItens) em nossa classe EstoqueWS.java para podermos adicionar à estrutura a tag <itens> </itens>, devemos dar um nome a nossa estrutura de lista e essa classe auxiliar vai nos ajudar com isso.
+
+Trocar: List<Item> por ListaItens
+
+@WebResult(name="itens") //fazer essa alteração tmb pq aqui é onde engloba toda a lista de itens, seria o <itens> ... </itens>
+public ListaItens getItens(){
+    ...
+    return new ListaItens(lista);
+}
+
+A classe ListaItens, é uma classe bem simples que apenas encapsula a Lista<Items>, dentro dela tem um construtor vazio que não é utilizado no projeto, porém é importante para o JAX-B 
+
+Agora precisamos apenas definir a apresentação desta Lista no XML (@XmlRootElement), para gerar elementos dentro do XML o Java utiliza outro padrão que é o JAX-B (Binding) que faz a conversão/LIGAÇÃO de Objetos Java para o mundo XML, podendo ser definidas regras de como um objeto se apresenta no XML e vise versa. (@XmlElement)
+
+Objeto <-----JAX-B-----> XML
+
+Adicione a notação @XmlRootElement dentro da classe ListaItens,
+agora temos que informar que cada item da lista (private List<Item> itens;) será um <item>, para isso add (@XmlElement(name="item"))
+temos que adicionar outra especificação (@XmlAccessorType) para dizer ao Java que estamos trabalhando com os filds/atributos, pois por padrão o JAX-B não segue com a utilização dos atributos, ele segue os propreties que são os getters e setters, para add essa excessão e trabalhar com atributos add a reconfiguração do JAX-B na classe (@XmlAccessorType(XmlAccessType.FIELD))
+
+ficou assim:
+
+@XmlRootElement  //definir que será apresentado os valores em um xml
+@XmlAccessorType(XmlAccessType.FIELD) //diz ao JAX-B para trabalhar com acessos aos atributos e não aos propreties (getters/setters)
+public class ListaItens {
+
+	@XmlElement(name="item") //dizendo que cada elemento da lista é um item na estrutura do XML
+	private List<Item> itens;
+...
+}
+
+
+------------------------------------------------------------------------------------//
+
+O que foi aprendido:
+-os métodos Java se tornam operations no WSDL
+-as operations fazem parte do portType
+-as anotações do JAX-WS servem para personalizar o WSDL
+-a especificação JAX-B gera o XML por baixo dos panos
+
+----------------------------------------------------------------------------------//
