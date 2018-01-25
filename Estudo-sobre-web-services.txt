@@ -1,0 +1,148 @@
+Web Service:
+
+É utilizada na integrção de sistemas e na comunicação entre aplicações diferentes.
+
+Através do web service é possível que novas aplicações possam interagir com outras aplicações já existentes e sistemas desenvolvidos em plataformas diferentes sejam compatíveis.
+
+Os web services são componentes que permitem as aplicações enviarem e receberem dados, garantindo que cada aplicação tenha sua própria linguagem, tornando-as únicas e assegurando que nenhuma complicação aconteça no envio e recebimento da transmissão de seus dados, onde a mesma é traduzida para um formato padrão, intermediário e universal utilizado pelos web services, como o XML, JSON, CSV e etc.
+
+Toda a comunicação entre sistemas passa a ser dinâmica e segura, já que os web services podem trazer agilidade para os processos e eficiência na comunicação. Além disso, os web services fazem com que os recursos da aplicação estejam disponíveis sobre a rede de forma normalizada (formatada em um padrão).
+
+Mais uma vez, o web service é uma solução bem sucedida na comunicação e integração de aplicações, pois possibilita que diferentes aplicações se cominiquem entre si e utilizem recursos diferente entre si.
+
+Utilizando a tecnologia web service, uma aplicação pode invocar outra para efetuar tarefas simples ou complexas mesmo que as duas aplicações estejam em diferentes sistemas e escritas em linguagens diferentes. Em outras palavras, os web services fazem com que os seus recursos estejam disponíveis para que qualquer aplicação cliente possa operar e extrair os recutsos fornecidos pelo web service.
+
+Os web services são utilizados para disponibilizar serviços interactivos via web, podendo ser acessado por outras aplicações usando o protocolo SOAP (Simple Object Access Protocol)
+
+Os Web services são identificados por um URI (Uniform Resource Identifier), que são descritos e definidos usando XML (Extensible Markup Language). O atrativo dos web services é o o fato do mesmo ser baseado em tecnologias como XML e HTTP (tecnologias standards)
+
+Seu objetivo se limita na comunicação de aplicações através da internet, esta comunicação é realizada com o intuito de facilitar a integração de aplicações de uma empresa (EAI Enterprise Application Integration) e fora dela, além de sua interoperabilidade, a EAI permite definir um workflow entre as aplicações e pode contituir uma alternativa aos ERP's (Enterprise Resource Planning), com um workflow estabelecido é possível otmizar e controlar processos e tarefas de uma determinada organização.
+
+
+As intituições responsáveis que garantem a padronização dos web services são a W3C e OASIS.
+Segundo a W3C (Word Wide Web Consortium), a mesma define um web service como sendo um sistema de software projetado para suportar a interoperabilidade entre máquinas sobre rede.
+
+ 
+Os diversos sistemas interagem com um web Service usando as mensagens SOAP, tipicamente o transporte de dados é realizado via protocolo HTTP ou HTTPS para conexões seguras e com XML. Sendo as bases para a construção de um web service os padrões XML e SOAP, os dados são transferidos no formato XML e encapsulados pelo protocolo SOAP, também é bastante comum usar o protocolo REST (Representational Transfer Protocol) para transferir o estado do dado para a aplicação.
+
+Com o surgimento dos web services as empresas agora podem publicar serviços de forma simles e que são totalmente isolados da base de dados. Deve-se ter um consenso sobre qual deve ser o mecanismo de segurança a ser adaptado pela tecnologia do web service.
+
+As seguintes questões são relevantes quando se trata de seguraça em web services:
+-Autencidade (para garantir que a transação do web service ocorreu entre o servidor e seu cliente)
+-Privacidade (todas as mensagens trocadas entre o servidor e o cliente não são interceptadas por uma pessoa não autorizada)
+-Integridade (as mensagens enviadas tanto pelo servidor ao cliente, como o contrário, devem permanecer inalteradas)
+
+Descrição de alguns mecanismos de segurnaça:
+
+SSL 
+O SSL (Secure Socket Layer) fronece autenticação, integridade dos dados e privacidade de serviços. Com ele tornou-se possível enviar informação confidencial utilzando o mecanismo de segurança SSL sob HTTP ou HTTPS (Hypertext Transfer Protocol Secure). Este mecanismo protege informações confidenciais e é fácil de ser configurado. Tem como desvantagem ser mais lento do que as transações HTTP não cifradas pelo que não é adequado para taxas de transferencias de dados elevadas.
+
+Por ser um mecanismo de proteção no nível de transporte, apresenta restrições para ser aplicado em aplicações webservices, pois o SSL não permite criptografia de parte da infromaçao nem o uso de sessões seguras entre mais de duas partes, uma vez que seu funcionamento se baseia em uma arquitetura de transporte fim-a-fim.
+
+XML Signature
+é uma iniciativa do W3C para especificar regras de processamento e para criação e representação de assinatura digital, possui uma idependencia da limguagem de programação, fácil interpretação humana e idependencia do fabricante, essa tecnologia permite assinar digitalmente subconjuntos de um documento XML
+
+XML encryption
+especifica um processo para cifra de dados e sua representação em formato XML. Os dados
+podem ser arbitrários (documentos XML), elementos XML ou conteúdos de elementos XML.
+Um documento XML que utiliza a XML encryption pode ser visto por qualquer utilizador, mas apenas o proprietário da chave de descodificação conseguirá compreender o conteúdo codificado.
+
+WS-security
+Web service security, destina-se ao uso da XML Signature e da XML Encryption para fornecer segurança as mensagens SOAP. É um esforço destinado a fazer com que os web seervices trabalhem melhor em um ambiente global. Também inclui alguns importantes componentes como encaminhamento, confiança e tratamento de transações.
+
+Saml 
+security Assertion Markup Language, é um padrão emergente para a troca de informação sobre autenticação e autorização. O SAML soluciona o problema de utilizadores transortarem seus direitos entre diferentes web services. è imortante  para aplicações que tencionam integrar um número de webservices para formar uma aplicação unificada.
+
+Limitações dos web services
+
+Apesar de sua popularidade e simplicidade, o SOAP tem várias limitaões, que por sua vez afetam os web services por dependerem de tais recursos.
+
+-segurnaça e privacidade (Nenhuma versão do SOAP define qualquer tipo de segurança, isto é devido o soap utilizar o HTTP, mas para implementar mecanismos de segurança no nível de transporte pode utilizar o protocolo SSL no HTTP, também conhecido como HTTPS, para garantir a confidencialidade, a integridade e a autenticação do cliente, do servidor e da comunicação cifrada. Como não existe um suporte para a segurança que inclui a privacidade, nas normas que compõe os web services tem levado a diferentes soluções para resolver o problema da segurança o que torna incompatível com a promessa de implementar uma normalização a nível global)
+
+-mensagens e encaminhamento (para suportar as funcionalidades das mensag ens assíncronas tradicionais)
+
+-qualidade de serviço e confiabilidade (para garantir tempos de resposta e detectar excesões)
+
+-processamento trnsacional (para suportar comunicação transacional, para associar essa comunicação transacinal com as transaçoes locais e para participar em transações distribuidas)
+
+-gestão (para controlar o estado e comportamento dos web services)
+
+-desempenho (para otimizar a execução dos web services que tem implicaçoes ao nível do desenho das aplicações, chamadas remotas, características da rede e armazenamento/processamento dos documentos)
+
+-interoperabilidade (suportar a interoperação sem problemas é o grande objetivo dos web services e do SOAP, ou seja, fornecerem uma plataforma de integração entre aplicações e diferentes linguagens e implementados em qualquer sistema operacional)
+
+Assim esta tecnologia seria normalizada, mas existe algumas incompatibilidades entre os WSDLs disponibilizados entre diferentes fornecedores, por um fornecer diferentes maneiras para especificação, causa conflito de como fazer a interpretação, tornando-os assim incompativeis.
+
+Integração de sistemas
+O web service é considerado por muitos que o mesmo corrige um grande problema que é a falta de integração entre sistemas. Os web services permitem que a integração de sistemas seja realizada de maneira compreensível, reutilizável e padronizada, é uma tentativa de organizar um cenário com uma variedade de aplicativos diferentes, fornecedores e plataformas.
+
+Para a estruturação dos dados nas mensagens recebidas/enviadas é utilizado o XML.
+As chamadas às operações, incluindo os parâmetros de entrada/saída, são codificadas no protocolo SOAP. Os serviços (operações, mensagens, e parâmetros, etc) são descritos usando a linguagem WSDL. O processo de publicação/pesquisa/descoberta de web services utiliza o protocolo UDDI.
+
+
+XML
+Extensible Markup Language  é a base em que os web services são construídos. Ele fornece a descrição, o armazenamento, o formato de transmissão para trocar dados através dos web services.
+
+A sintaxe XML usada nas tecnologias dos web services especifica como os dados sao representados genericamente, define como e com que qualidade de serviço os dados são transmitidos, pormenoriza como os serviços são publicados e descobertos. Fica na responsabilidade dos web services decodificar as várias partes de XML para interagir com as várias aplicações.
+
+SOAP
+O SOAP (Simple Object Access Protocol) baseia-se numa invoação remota de um métoddo e para tal necessita especificar o endereço do componente (web service que está sendo acessado), o nome do método e os argumentos para esse método. Esses dados são formatados em XML com determinadas regras e enviados normalmente por HTTP para esse componente (Web service). 
+
+Não define ou impõe qualquer semântica específica da implementação ou modelo de programação. Este aspecto é extremamente importante, pois permite que quer o serviço, ou quer o cliente que invoca o serviço sejam aplicações desenvolvidads  sobre diferentes linguagens de programação. Por esta razão o SOAP tornou-se uma norma aceita para se utilizar com web services, uma tecnologia construía com base em XML e HTTP. Desta forma, pretende-se garantir a interoperabilidade e intercomunicação entre diferentes sistemas, através da utilização da linguagem XML e do mecanismo de transporte HTTP ou outro como exemplo o SMTP. 
+
+O SOAP permite que os documentos XML de envio e recepção sobre a web suportem um protocolo comum de transferência de dados para uma comunicação de rede eficaz, ou seja, o SOAP providencia o transporte de dados para os web services.
+
+Em relaçao a Web o SOAP é um protocolo RCP que fucniona sobre HTTP ou SMTP ou outro, de forma a ultrapassar as restrições de segurança e firewalls normalmente impostas aos sistemas clássicos de RPC suportando mensagens de XML. Em vez de usar o HTTP para pedir uma página HTML para ser vizualizada num brawser, o SOAP envia uma mensagem de XML através do pedido HTTP e recebe uma resposta, se exixtir, através da resposta do HTTP.  Para assegurar a tranamissão da mensagem de XML, o servidor de HTTP, tais como APache ou IIS (Microsoft Internet Information Server), reccebe mensagens SOAP e deve validar e compreender o formato do documento XML definido na especificaçao SOAP v1.1
+
+RPC
+
+Chamada remota de procedimento (RPC, acrônimo de Remote Procedure Call) é uma tecnologia de comunicação entre processos que permite a um programa de computador chamar um procedimento em outro espaço de endereçamento (geralmente em outro computador, conectado por uma rede). O programador não se preocupa com detalhes de implementação dessa interação remota: do ponto de vista do código, a chamada se assemelha a chamadas de procedimentos locais.
+ 
+RPC é uma tecnologia popular para a implementação do modelo cliente-servidor de computação distribuída. Uma chamada de procedimento remoto é iniciada pelo cliente enviando uma mensagem para um servidor remoto para executar um procedimento específico. Uma resposta é retornada ao cliente. Uma diferença importante entre chamadas de procedimento remotas e chamadas de procedimento locais é que, no primeiro caso, a chamada pode falhar por problemas da rede. Nesse caso, não há nem mesmo garantia de que o procedimento foi invocado.
+
+
+Definição de WSDL:
+É a sigla de Web Services Description Language, padrão baseado em XML para descrever o serviço como no COM, onde ele traz os métodos do Web Service. Funciona como uma espécie de "TypeLibrary" do Web Service, além de ser usado para a validação das chamadas dos métodos.
+
+O WSDL é uma especificação desenvolvida pelo W3C.
+
+O WSDL é extensível para permitir a descrição dos serviços e suas mensagens, independentemente dos formatos de mensagem e dos protocolos de rede que sejam usados. No entanto, é comum usar-se o MIME (Multipurpose Internet Mail Extensions) e o HTTP://SOAP.
+
+O WSDL descreve os serviços disponibilizados à rede através de uma semântica XML, este providencia a documentação necessária para se chamar um sistema distribuído e o procedimento necessário para que esta comunicação se estabeleça. Enquanto que o SOAP especifica a comunicação entre um cliente e um servidor, o WSDL descreve os serviços oferecidos.
+
+UDDI
+
+protocolo desenvolvido para a organização e registro de web services
+O UDDI (Universal Description Discovery and Integration) é uma iniciativa em desenvolviemnto no âmbito do consórcio industrial UDDI promovido originalmente pela IBM, Microsoft e Arriba, com o objetivo de acelerar a interoperabilidade e utilização dos web services, pela proposta de um serviço de registro de nomes de organizações e de descrição do serviço.
+
+O UDDI nada mais é do que um serviço de diretório onde empresas podem registrar (publicar) e buscar (descobrir) por serviços de web (Web services)
+
+Um registro UDDI contém 3 tipos de informação:
+-informações gerais de cada organização, tais como o nome, endereço e contatos
+-informações de organizações e serviços por categorias de negócios
+-informações técnicas sobre os serviços providenciados pelas organizações
+
+O UDDI providencia 3 funçoes principais, conhecidas como publicação, descoberta e ligação
+1-publicação: permite que uma organização divulgue o(s) seu(s) serviço(s)
+2-descoberta: permite que o cliente do serviço, procure e encontre um determinado serviço
+3-ligação (bind): permite que o cliente do serviço possa estabelecer a ligação e interagir com o serviço.
+
+WS-i
+é o consórcio que garante a integração entre os web services para garantir sempre que os web services possam "conversar ente si".
+
+Evolução dos webservices
+Parece natural a emersão de novos portais, não para as pessoas consultarem e usarem, mas para as aplicações, i.e., para os serviços se registrarem/publicarem de modo a tornarem-se conhecidos, descobertos e usados. Esses portais de serviços (tecnicamente consistem em serviços de registros UDDI e/ou ebXML) poderão ser definidos a nível global, regional, para domínios de negócio horizontais ou verticais.
+
+Vantagens e desvantagens
+Os Web Services são modelos que surgiram para o desenvolvimento de aplicações típicas de negócio eletrônico, envolvendo e suportando o estabelecimento da colaboração e negociação de forma aberta, distribuída e dinâmica entre distintos parceiros.
+
+Os Web Services podem no futuro representar um sucesso significativo por causa de existir um esforço significativo, por parte da maioria dos parceiros industriais, na normalização das tecnologias envolvidas.
+
+As tecnologias subjacentes aos Web Services (tais como HTTP, SOAP, WSDL, UDDI, XML) são abertas, amplamente divulgadas e consensuais. Por outro lado, existe potencial para haver uma real independência das linguagens de programação (Java, C++, VB, Delphi, C#), das arquiteturas de computadores e sistemas operacionais, o que permite uma evolução mais suave e econômica para este modelo computacional.
+
+No entanto, existem críticas que demonstram medos ou falsas expectativas que os investimentos em Web Services podem suscitar. Uma dessas críticas diz respeito ao fato do SOAP ser menos eficiente do que os sistemas de RPC existentes. Por exemplo, as mensagens (com os respectivos envelopes e descrição de tipos) trocadas entre as partes são descritas em formato de texto/XML enquanto que nos sistemas clássicos de RPC são trocadas em formato binário.
+
+No entanto, esta desvantagem é compensada significativamente pela facilidade de interoperação entre os serviços, sem os problemas conhecidos de segurança/firewalls, e pela facilidade de se esconder os detalhes proprietários das infraestruturas de suporte..
+
+
+//Fonte de pesquisa: https://pt.wikipedia.org/wiki/Web_service#WSDL

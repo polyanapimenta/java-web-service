@@ -1,0 +1,24 @@
+package br.com.caelum.estoque.ws;
+
+import javax.xml.ws.Endpoint;
+
+public class PublicaWebService {
+
+	public static void main(String[] args) {
+		//Publicar o nosso serviço:
+		
+		//instanciando a classe EstoqueWS
+		EstoqueWS service = new EstoqueWS();
+
+		//Definindo a nossa URL -> esta URL após ser chamada devria retornar o meu método da classe EstoqueWS
+		String url  = "http://localhost:8080/estoquews";
+		
+		//A publicação concreta de nosso serviço é feita através de um Endpoint é uma classe que vem do JAX-WS
+		//Endpoint é o endereço concreto de um serviço que é composto pela sua url e seu implementador que é o seu service
+		
+		Endpoint.publish(url, service);
+		
+		System.out.println("Rodando Serviço!");
+	}
+
+}

@@ -1,0 +1,8 @@
+package br.com.caelum.estoque;
+
+public class EstoqueWS {
+	//criando e instanciando o ItemDao
+	private ItemDao dao = new ItemDao();
+	
+	
+}

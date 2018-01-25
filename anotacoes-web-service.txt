@@ -1,0 +1,25 @@
+links de pesquisas:
+----------------------------------
+https://www.devmedia.com.br/curso/curso-de-java-web-service-na-pratica/413
+
+https://www.devmedia.com.br/soapui-testes-de-web-services-rapido-e-descomplicado/37461
+
+-como fazer moc de serviço utilizando soap ui wsdl
+-fazendo requisicoes java com o soapui
+
+Livro:
+SOA aplicado
+Integrando com web services e além
+
+Artigo:
+http://www.seer.ufrgs.br/reic/article/viewFile/22140/12928
+-----------------------------------
+web service é apenas um serviço que fica em um servidor onde o cliente pergunta e o servidor responde
+
+web service - > faz integração entre serviços
+
+web service é um padrão de resposta, mais ou menos complexos, é forma como recebe a informação e a forma de resposta da informação.
+
+web service é um comunicador universal (um interlocutor,quem irá trazer tal informação)
+
+-----------------------------------------------

@@ -1,0 +1,247 @@
+JAX-WS: DOMINE A CRIAÇÃO DE WEBSERVICES SOAP
+
+Aplicações não vivem sozinhas, elas precisam acessar informações de outras Aplicações e outras aplicações acessarem as informações desta.
+
+aplicações fornecem serviços
+serviços acessam funcionalidades/informações das aplicações (web service/servidores)
+
+Serviços Web com SOAP
+integração <------> Serviço  
+ http/xml
+
+ -----------
+
+ Pré requisitos
+ -> Eclipse
+ -> Java JDK instalado
+ -> SoapUI
+ -> JBoss
+ -> modelo.zip (copiar apenas a pasta br e colar dentro de src do prjeto (estoquews) criado dentro do eclipse)
+
+------------
+
+Servidores mais robustos:
+tomcat
+Jboss
+Glassfish
+
+//////////////////////////////
+
+-> Criar um serviço SOAP
+
+/////////////////////////////
+
+* Eclipse vai ser utilizado para criar o projeto/desenvolver e para rodar o servidor de aplicação.
+
+Classes Java (Funcionalidades)
+
+Item.java: nela possui atributos, construtor padrão e público, getters e setters, classe utilitária par afacilitar a criação do item
+
+ItemDao.java -> simula uma base de dados, simula um repositório com os itens e um metodo de filtro para buscar um item
+
+Para iniciar precisamos apenas do Java JRE, pois que dentro dele já possui um servidor para podermos testar o serviço SOAP (rodar um web service SOAP)
+
+JAX-WS (Java API for XML - Web Service) -> está dentro do Java JRE
+dentro do JRE já está tudo embutido para efetuar uma chamada SOAP
+e disponibilizar um serviço SOA para simular um servidor, para podermos testar o serviço
+
+
+-> Criar a classe EstoqueWS.java dentro do pacote br.ccom.caelum.estoque.ws
+dentro dessa classe EstoqueWS, foi intanciado a conexão com o DAO (Banco), e criado um método público que retorna uma lista com todos os Itens, ao ser publicado e chamado este serviço via SoapUI será retornado um XML com todos os Itens cadastrados.
+
+-> Pré ajustes em nossas classes para podermos publicar nosso serviço:
+Notações (especificações/linguagem web) de javax.xml.ws (seria meio que um mapeamento dentro das classes java para fazer com que o serviço SOAP seja criado exibido corretamente)
+
+*Add em EstoqueWS.java
+@WebService -> serve para indicar a publicação de um serviço é o mínimo para poder subir o serviço SOAP.  
+
+*Add na classe Item.java
+@XmlRootElement -> serve para exibir os valores em um documento XML, este item será exibido de alguma forma em um documento XML quando o método for chamado.
+
+
+//////////////////////////////
+
+-> Publicar um serviço SOAP
+
+//////////////////////////////
+
+-> Precisamos criar uma classe com método main onde vai ter o URI (URL) para a chamada do serviço SOAP em específico
+
+PublicaWebService.java dentro do pacote br.com.caelum.estoque.ws
+Foi instanciado a classe EstoqueWS de onde será acessado o método que precisamos para que retorne uma lista com todos os itens, foi definido uma String que é nossa url
+
+(http://localhost:8080/estoquews) esta URL após ser chamada deveria retornar o meu método getItens da classe EstoqueWS
+
+Quem realmente faz a mágica de publicar o nosso serviço é uma classe que vem do JAX-WS
+Endpoint com o método publish, um Endpoint é o endereço concreto de um serviço que é composto pela sua url e seu implementador que é o seu service.
+
+Isso é o mínimo do mínimo para a publicação de um serviço, a criação da instancia, definição de sua URL, e a junção dos dois no publish.
+
+Após publicar um serviço SOAP > colocar para rodar no Eclipse
+apenas pegar a URI (http://localhost:8080/estoquews) e colocar no browser não funciona.
+mas porque não funcionou? pq ao enviar pelo browser estamos fazendo um GET e a resposta do mesmo é nada, e todos os serviços SOAP são POST, portando nosso serviço será apenas retornado quando efetuarmos a chamada dentro do SoapUI 
+
+Dentro do nosso serviço SOAP possui algumas informações do que podemos ou nao fazer, e essas informações são geralmente publicadas junto com o nosso serviço, e isto costa em nosso contrato WSDL (web service definition language), apenas verificar as definições de nosso Web Service não significa que estejamos rodando o nosso serviço SOAP, isto é apenas definições relacionadas ao meu serviço.
+
+Qualquer serviço SOAP possui contrato WSDL!
+
+Descobrindo nosso Contrato WSDL, nossas especificações de que o serviço oferece, que são as definições do nosso Web Service
+http://url:porta/nome-serviço?wsdl -> xml que definine o nosso serviço, é o nosso contrato
+
+
+-> Interface para testar o SOAP é o SOAP UI (é um Client, uma interface para testar o SOAP)
+
+para criar um novo projeto SOAP
+com o SOAP UI aberto vá em > SOAP 
+                             projectName: estoquews-client 
+                             initial WSDL (éa url do nosso contrato WSDL): http://url:porta/nome-serviço?wsdl
+
+após criar um novo projeto no SoapUI, através da http://url:porta/nome-serviço?wsdl, o SoapUI lê as definições do nosso web service, dentro do nosso contrato tem as informações do que pode ou não ser feito, o SoapUI automaticamente lê o contrato e já sabe montar todas as nossa requisições dento do projeto, e ele faz isso, deixa tudo pronto para nós efetuarmos as chamadas nas requisições. 
+
+Ao confirmar é gerado os dados para enviar uma requisição SOAP. Isto é, uma requisição HTTP POST que envia XML. Esse XML é a mensagem SOAP!
+
+XML com protococlo http, padrões estrutura do XML SOAP:
+
+Envelope
+    Header (opcional, pode ser apagado)
+    Body (Do que queremos enviar)
+        e um ws:requisição do que será chamado.
+    Body
+Envelope
+
+Exemplo real:
+
+--XML enviado
+
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.estoque.caelum.com.br/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:getItens/>
+   </soapenv:Body>
+</soapenv:Envelope>
+
+O SoapUI envia um XML(sobre o que queremos buscar) e retorna um outro XML como resposta ao que foi pedido.
+
+--XML retornado
+
+<S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+   <S:Body>
+      <ns2:getItensResponse xmlns:ns2="http://ws.estoque.caelum.com.br/">
+         <return>
+            <codigo>SEO</codigo>
+            <nome>SEO na PrÃ¡tica</nome>
+            <quantidade>4</quantidade>
+            <tipo>Livro</tipo>
+         </return>
+         <return>
+            <codigo>RUB</codigo>
+            <nome>Jogos com Ruby</nome>
+            <quantidade>8</quantidade>
+            <tipo>Livro</tipo>
+         </return>
+         <return>
+            <codigo>GAL</codigo>
+            <nome>Galaxy Tab</nome>
+            <quantidade>3</quantidade>
+            <tipo>Tablet</tipo>
+         </return>
+         <return>
+            <codigo>IP4</codigo>
+            <nome>IPhone 4 C</nome>
+            <quantidade>7</quantidade>
+            <tipo>Celular</tipo>
+         </return>
+         <return>
+            <codigo>IP5</codigo>
+            <nome>IPhone 5</nome>
+            <quantidade>3</quantidade>
+            <tipo>Celular</tipo>
+         </return>
+         <return>
+            <codigo>IP6</codigo>
+            <nome>IPhone 6 S</nome>
+            <quantidade>10</quantidade>
+            <tipo>Celular</tipo>
+         </return>
+         <return>
+            <codigo>MOX</codigo>
+            <nome>Moto X</nome>
+            <quantidade>6</quantidade>
+            <tipo>Celular</tipo>
+         </return>
+         <return>
+            <codigo>MOG</codigo>
+            <nome>Moto G</nome>
+            <quantidade>8</quantidade>
+            <tipo>Celular</tipo>
+         </return>
+         <return>
+            <codigo>MXX</codigo>
+            <nome>Moto MAXX</nome>
+            <quantidade>2</quantidade>
+            <tipo>Celular</tipo>
+         </return>
+      </ns2:getItensResponse>
+   </S:Body>
+</S:Envelope>
+
+---------------------------------------------------------------------------//
+O que foi aprendido:
+-Serviços Web são utilizados para integrar sistemas
+-SOAP é XML que trafega em cima do protocolo HTTP
+-o JRE já vem com o JAX-WS (Metro) para usar SOAP
+-o contrato do serviço é o WSDL que também é um XML
+-uma mensagem SOAP possui um Envelope e um Body,
+-na mensagem SOAP o Header é opcional
+
+--------------------------------------------------------------------------//
+//////////////////////
+Algumas Observações:
+/////////////////////
+
+No primeiro elemento do XML (Envelope) temos a definições de duas URLs:
+
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:ws="http://ws.estoque.caelum.com.br/"
+Você já viu essas definições antes? Para quê elas servem?
+
+As duas definições são mais do que URLs, elas são namespaces!
+
+xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+xmlns:ws="http://ws.estoque.caelum.com.br/"
+Um namespace é parecido com o package do mundo Java e ajuda distinguir elementos e evitar conflitos de nomes. O primeiro namespace define os elementos padrão do SOAP como Envelope e Body. O segundo serve para usar os elementos do nosso modelo como o item.
+
+Além disso, o primeiro namespace indica que estamos usando SOAP na versão 1.1 (não muito explícito mas se fosse SOAP 1.2 seria o namespace http://www.w3.org/2003/05/soap-envelope - acreditem!).
+
+Repare também que cada namespace define um prefixo. O primeiro usa soapenv, o segundo ws. Os prefixo são úteis para referenciar o namespace dentro da mensagem XML. Ou seja, cada vez que encontramos ws: na verdade queremos dizer http://ws.estoque.caelum.com.br/.
+
+Estilos de Integraçao:
+
+Você que está fazendo este curso, certamente sabe que é raríssimo um sistema funcionar de forma isolada. Sendo sempre necessário fazer integração com outros sistemas que não foram desenhadas com esse propósito. Para resolver esse problema, podemos usar os mais diversos estilos de integração. Dentre eles:
+
+Troca de arquivos
+Banco de dados compartilhado
+RPC
+Mensageria
+A questão é que cada estilo tem suas vantagens e desvantagens. É por isso que é papel do arquiteto pensar em algumas questões antes de decidir qual estilo aplicar:
+
+-Vamos trocar funcionalidades ou apenas dados?
+-Quais dados trocaremos?
+-Qual protocolos utilizaremos?
+-A comunicação será síncrona ou assíncrona?
+-Quais ferramentas/frameworks utilizaremos?
+Entre outros ...
+
+Nesse treinamento focaremos no estilo RPC (Remote Procedure Call). Objetivo desse estilo de integração é chamar um procedimento remotamente (via rede usamos HTTP com SOAP). No mundo Java este procedimento é um método.
+
+RPC segue o modelo cliente-server (síncrono) que já testamos nesse capítulo. O SoapUI foi o cliente e rodamos o server através do JRE!
+
+----------------------------------------------------------------------//
+
+////////////////////////////
+Personalizando o Serviço:
+///////////////////////////
+
+-Algumas notações:
+
+?WSDL -> um xml que contém informações para o client poder chamar o serviço.
