@@ -1,0 +1,39 @@
+package br.com.caelum.estoque.ws;
+
+import java.util.List;
+
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+import javax.xml.ws.RequestWrapper;
+import javax.xml.ws.ResponseWrapper;
+
+import br.com.caelum.estoque.modelo.item.Filtro;
+import br.com.caelum.estoque.modelo.item.Filtros;
+import br.com.caelum.estoque.modelo.item.Item;
+import br.com.caelum.estoque.modelo.item.ItemDao;
+import br.com.caelum.estoque.modelo.item.ListaItens;
+
+
+//importando o serviço web service [javax.jws.WebService]
+@WebService
+public class EstoqueWS {
+	//criando e instanciando o ItemDao
+	private ItemDao dao = new ItemDao();
+	
+	//serve para renomear a request/o name do método
+	@WebMethod(operationName="todosOsItens")
+	@ResponseWrapper(localName="itens")
+	@WebResult(name="item")
+	@RequestWrapper(localName="listaItens")
+	
+	//método publico que devolve uma lista de itens
+	public ListaItens getItens(@WebParam(name="filtros") Filtros filtros){
+		
+		System.out.println("Chamando o getItens()"); //só para saber que o método foi chamado
+		List<Filtro> lista = filtros.getLista();
+		List<Item> itensResultado = dao.todosItens(lista);
+		return new ListaItens(itensResultado);		
+	}
+}

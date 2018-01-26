@@ -322,3 +322,51 @@ O que foi aprendido:
 -a especificação JAX-B gera o XML por baixo dos panos
 
 ----------------------------------------------------------------------------------//
+Algumas Observações:
+////////////////////
+
+As anotações @WebService, @WebMethod e @WebResult são da especificação JAX-WS. A anotação @XmlElement é do JAX-B e serve para redefinir o nome do elemento no XML (entre outras funções).
+
+O JAX-WS usa por baixo dos panos o JAX-B para gerar o XML. Importante é que todas as anotações tem um impacto no XML WSDL e SOAP gerado.
+
+A anotação para manipular o retorno é o @WebResult, por exemplo:
+
+@WebService()
+public class EstoqueWS {
+
+    private ItemDao dao = new ItemDao(); 
+
+    @WebMethod(operationName="todosOsItens")
+    @WebResult(name="itens")
+    public ListaItens getItens() {
+        System.out.println("Chamando getItens()");
+        return new ListaItens(dao.todosItens()); //criando uma ListaItens
+    }
+
+}
+Com @WebService declaramos o service e com @WebMethod podemos personalizar o nome da operação publicada.
+
+A anotação também serve para excluir um método do contrato WSDL pois por padrão todos os métodos públicos serão utilizados no WSDL. Veja o exemplo:
+
+@WebService
+public class EstoqueWS {
+
+    private ItemDao dao = new ItemDao(); 
+
+    @WebMethod(operationName="todosOsItens")
+    @WebResult(name="itens")
+    public ListaItens getItens() { 
+
+        System.out.println("Chamando getItens()");
+        List<Item> itens = dao.todosItens();
+        return new ListaItens(itens);
+    }    
+
+    @WebMethod(exclude=true)
+    public void outroMetodo() { 
+        //nao vai fazer parte do WSDL
+    }
+}
+
+O outroMetodo() não fará parte do WSDL, ok?
+

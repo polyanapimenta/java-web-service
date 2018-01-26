@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 //Notação para exibir os valores em um documento xml
 @XmlRootElement
-
 public class Item {
 
 	private String codigo;
