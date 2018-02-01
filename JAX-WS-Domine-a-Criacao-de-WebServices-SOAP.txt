@@ -370,3 +370,32 @@ public class EstoqueWS {
 
 O outroMetodo() não fará parte do WSDL, ok?
 
+
+///////////////////////////////
+04. WSDL concreto e abstrato:
+//////////////////////////////
+
+personalizando uma excesão java: @WebFault, toda excessão é um Fault 
+
+xsd é semelhante a uma classe
+e um xml é semelhante a um objeto, portanto um xsd tem todas as definições que um xml terá.
+
+Acessando o xsd:
+http://localhost:8080/estoquews?xsd=1
+
+nível de utilização
+operation > message > type >xsd
+
+parte abstrata é onde é definido as partes do wsdl é do type ao portType
+
+Parte concreta, onde possui a geração completa do SOAP, onde se define o protocolo e codificação é a partir do binding.
+
+Gerando uma interface para Java para vizualizar o wsdl a partir do Eclipse, esta ferramenta já vem instalada junto com o jdk:
+
+obs: navegue até a pasta do woskspace do projeto onde se encontra as pastas /bin e /src e execute o comando abaixo:
+
+wsgen -cp bin br.com.caeloum.estoque.es.EstoqueWS -wsdl -inlineSchemas
+
+(-inlineSchemas gera os dois schemas juntos o do wsdl e o do xsd.)
+
+depois dar F5 NO ECLIPSE.
